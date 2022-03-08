@@ -5,7 +5,6 @@ import Nweet from "components/Nweet";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-
   useEffect(() => {
     dbService.collection("nweets").onSnapshot((snapshot) => {
       const nweetArray = snapshot.docs.map((doc) => ({
@@ -19,6 +18,7 @@ const Home = ({ userObj }) => {
     event.preventDefault();
     await dbService.collection("nweets").add({
       text: nweet,
+      createdAt: Date.now(),
       creatorId: userObj.uid,
     });
     setNweet("");
